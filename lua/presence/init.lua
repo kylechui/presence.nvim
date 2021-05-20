@@ -94,13 +94,13 @@ function Presence:setup(options)
     self:set_option("debounce_timeout", 15)
     self:set_option("main_image", "neovim")
     self:set_option("neovim_image_text", "The One True Text Editor")
-    self:set_option("workspace_text", "Working on %s")
     -- Status text options
     self:set_option("editing_text", "Editing %s")
     self:set_option("file_tree_text", "Browsing %s")
     self:set_option("git_commit_text", "Committing changes")
     self:set_option("plugin_manager_text", "Managing plugins")
     self:set_option("reading_text", "Reading %s")
+    self:set_option("workspace_text", "Working on %s")
 
     local discord_socket = self:get_discord_socket()
     if not discord_socket then
@@ -361,7 +361,7 @@ function Presence:get_status_text(filename)
             return string.format(self.options.editing_text, filename)
         end
     else
-    	local file_tree = file_trees[filename:match "[^%d]+"]
+    	  local file_tree = file_trees[filename:match "[^%d]+"]
         if file_tree then
             return string.format(self.options.file_tree_text, file_tree)
         elseif vim.bo.filetype == "netrw" then
