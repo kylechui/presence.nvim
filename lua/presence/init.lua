@@ -361,8 +361,9 @@ function Presence:get_status_text(filename)
             return string.format(self.options.editing_text, filename)
         end
     else
-        if file_trees[filename:match "[^%d]+"] then
-            return string.format(self.options.file_tree_text, file_trees[filename:match "[^%d]+"])
+    	local file_tree = file_trees[filename:match "[^%d]+"]
+        if file_tree then
+            return string.format(self.options.file_tree_text, file_tree)
         elseif vim.bo.filetype == "netrw" then
             return string.format(self.options.file_tree_text, "Netrw")
         elseif plugin_managers[vim.bo.filetype] then
@@ -494,7 +495,7 @@ function Presence:update_for_buffer(buffer, should_debounce)
         small_text = use_file_as_main_image and neovim_image_text or file_text,
     }
 
-    local status_text = self:get_status_text(filename, buffer)
+    local status_text = self:get_status_text(filename)
 
     local activity = {
         state = status_text,
